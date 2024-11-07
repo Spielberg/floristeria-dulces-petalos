@@ -12,6 +12,10 @@ test: ## Run tests
 	@echo "🧪 Running tests..."
 	@npx vitest
 
+coverage: ## Run tests with coverage
+	@echo "🧪 Running tests with coverage..."
+	@npx vitest --coverage
+
 watch: ## Watch for changes and run lint
 	@echo "👀 Watching for file changes..."
 	find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) -not -path "./node_modules/*" | entr make lint
