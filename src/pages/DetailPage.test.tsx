@@ -3,6 +3,7 @@ import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { describe, it, expect, vi, Mock } from 'vitest';
 import DetailPage from './DetailPage';
 import es from '@/helper/i18n/translation/es.json';
+import { act } from 'react';
 
 // Mock the `useRouteError` and `useNavigate` hooks from react-router-dom
 vi.mock('react-router-dom', async () => {
@@ -76,7 +77,9 @@ describe('DetailPage', () => {
     );
 
     const button = screen.getByText(es['app.page.details.btn.back']);
-    button.click();
+    act(() => {
+      button.click();
+    });
 
     expect(navigate).toHaveBeenCalledWith(-1);
   });
