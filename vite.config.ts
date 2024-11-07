@@ -14,5 +14,14 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './setupTests.js',
     css: true,
+    coverage: {
+      include: ['src/**/*'],
+      reporter: ['text', 'html'],
+      exclude: [
+        'src/main.tsx',
+        'src/vite-env.d.ts',
+        'src/router.tsx',
+      ],
+    },
   }
 });

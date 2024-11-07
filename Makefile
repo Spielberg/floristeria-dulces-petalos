@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := help
+.PHONY: coverage
 
 start: ## Execute project on local environment
 	@echo "🏃 Running project..."
@@ -14,7 +15,7 @@ test: ## Run tests
 
 coverage: ## Run tests with coverage
 	@echo "🧪 Running tests with coverage..."
-	@npx vitest --coverage
+	@npx vitest run --coverage
 
 watch: ## Watch for changes and run lint
 	@echo "👀 Watching for file changes..."
