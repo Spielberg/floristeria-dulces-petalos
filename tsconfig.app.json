@@ -26,6 +26,9 @@
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,
+
+    /* Testing */
+    "types": ["@testing-library/jest-dom"],
   },
   "include": ["src"]
 }
