@@ -2,7 +2,7 @@
 
 start: ## Execute project on local environment
 	@echo "🏃 Running project..."
-	@npm run dev
+	@npx vite --port 4000
 
 lint: ## Run lint
 	@echo "🧹 Running lint..."
