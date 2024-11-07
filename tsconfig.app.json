@@ -22,7 +22,8 @@
     "composite": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@types/*": ["src/types/*"]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,

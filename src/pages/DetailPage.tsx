@@ -1,15 +1,34 @@
 import * as React from 'react';
-import { Box, Button, Typography, Grid, Paper } from '@mui/material';
+import { Box, Button, Typography, Grid, Paper, CardMedia } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
 import Layout from '@/Layout';
 import { useTranslation } from 'react-i18next';
+import { Product } from '@/types';
+import { fetchProduct } from '@/api/products';
+import { useQuery } from '@tanstack/react-query';
 
 // Detail View Component
 const DetailPage = (): React.ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { data: product, isLoading } = useQuery<Product>({
+    queryKey: [`product-${id}`],
+    queryFn: () => fetchProduct(id!),
+    enabled: !!id
+  });
+
+  if (isLoading || !product) {
+    return (
+      <Layout title="">
+        <Typography variant="body1" color="textPrimary">
+          {t('app.page.details.loading')}
+        </Typography>
+      </Layout>
+    );
+  }
 
   return (
     <Layout title={`Flor: ${id}`}>
@@ -25,18 +44,12 @@ const DetailPage = (): React.ReactElement => {
       <Grid container spacing={2}>
         {/* Image Section */}
         <Grid item xs={12} md={6}>
-          <Paper
-            sx={{
-              height: 300,
-              backgroundColor: '#b3e5fc',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            elevation={3}
-          >
-            <Typography variant="h5">Imagen</Typography>
-          </Paper>
+        <CardMedia
+            component="img"
+            sx={{ width: 150, height: 150 }}
+            image={product.imgUrl}
+            alt={product.name}
+          />
         </Grid>
 
         <Grid item xs={12} md={6}>

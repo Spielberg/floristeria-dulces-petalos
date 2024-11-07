@@ -1,14 +1,19 @@
 import {
   Box,
   Grid,
-  Typography,
+  CircularProgress,
+  CardMedia,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+
+import { Product } from '@/types';
+import { fetchAll } from '@/api/products';
 
 import Search from '@/components/Search';
 import Layout from '@/Layout';
 
-const Item = ({ name }: { name: string }) => (
+const Item = ({ product }: { product: Product }) => (
   <Box
     sx={{
       width: '100%',
@@ -21,28 +26,43 @@ const Item = ({ name }: { name: string }) => (
       border: '1px solid #81d4fa'
     }}
   >
-    <Typography>{name}</Typography>
+    <CardMedia
+      component="img"
+      sx={{ width: 150, height: 150 }}
+      image={product.imgUrl}
+      alt={product.name}
+    />
+    <pre>{JSON.stringify(product, null, 2)}</pre>
   </Box>
 );
 
-const HomePage = () => (
-  <Layout title="List view">
-    <>
-      <Box sx={{ mb: 3 }}>
-        <Search />
-      </Box>
+const HomePage = () => {
+  const { data: products, isLoading } = useQuery<Product[]>({
+    queryKey: ['products'],
+    queryFn: fetchAll
+  });
 
-      <Grid container spacing={2}>
-        {[...Array(8)].map((_, index) => (
-          <Grid item xs={6} sm={4} md={3} key={index}>
-            <Link to={`/flor/${index + 1}`}>
-              <Item name={`Item ${index + 1}`} />
-            </Link>
+  return (
+    <Layout title="List view">
+      <>
+        <Box sx={{ mb: 3 }}>
+          <Search />
+        </Box>
+        {isLoading && <CircularProgress />}
+        {products?.length && (
+          <Grid container spacing={2}>
+            {products.map((product) => (
+              <Grid item xs={6} sm={4} md={3} key={product.id}>
+                <Link to={`/flor/${product.id}`}>
+                  <Item product={product} />
+                </Link>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </>
-  </Layout>
-);
+        )}
+      </>
+    </Layout>
+  );
+}
 
 export default HomePage;
