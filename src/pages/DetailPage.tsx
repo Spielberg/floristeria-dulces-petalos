@@ -3,11 +3,13 @@ import { Box, Button, Typography, Grid, Paper } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@/Layout';
+import { useTranslation } from 'react-i18next';
 
 // Detail View Component
 const DetailPage = (): React.ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Layout title={`Flor: ${id}`}>
@@ -17,7 +19,7 @@ const DetailPage = (): React.ReactElement => {
           color="warning"
           onClick={() => navigate(-1)}
         >
-          Back
+          {t("app.page.details.btn.back")}
         </Button>
       </Box>
       <Grid container spacing={2}>
