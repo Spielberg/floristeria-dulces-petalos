@@ -20,6 +20,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "composite": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
   },
   "include": ["vite.config.ts"]
 }

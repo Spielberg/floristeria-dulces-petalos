@@ -5,6 +5,7 @@ import {
   Typography,
 } from '@mui/material';
 
+import '@/helper/i18n/index';
 import Header from '@/components/Header';
 
 interface Props {
