@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Paper, IconButton, TextField } from "@mui/material";
+import { Paper, IconButton, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +19,7 @@ const Search = (): React.ReactElement => {
       </IconButton>
       <TextField
         variant="outlined"
-        placeholder={t("app.search.input.placeholder")}
+        placeholder={t('app.search.input.placeholder')}
         fullWidth
         InputProps={{
           style: { backgroundColor: '#e0f7fa' }

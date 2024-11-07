@@ -19,7 +19,7 @@ const DetailPage = (): React.ReactElement => {
           color="warning"
           onClick={() => navigate(-1)}
         >
-          {t("app.page.details.btn.back")}
+          {t('app.page.details.btn.back')}
         </Button>
       </Box>
       <Grid container spacing={2}>

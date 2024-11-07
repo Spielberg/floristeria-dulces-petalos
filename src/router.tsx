@@ -6,12 +6,12 @@ import DetailPage from '@/pages/DetailPage';
 
 const routes = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomePage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/flor/:id",
+    path: '/flor/:id',
     element: <DetailPage />,
   },
 ]);
