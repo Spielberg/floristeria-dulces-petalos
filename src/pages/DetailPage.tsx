@@ -9,7 +9,6 @@ import { Product } from '@/types';
 import { fetchProduct } from '@/api/products';
 import { useQuery } from '@tanstack/react-query';
 
-// Detail View Component
 const DetailPage = (): React.ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -45,11 +44,11 @@ const DetailPage = (): React.ReactElement => {
         {/* Image Section */}
         <Grid item xs={12} md={6}>
         <CardMedia
-            component="img"
-            sx={{ width: 150, height: 150 }}
-            image={product.imgUrl}
-            alt={product.name}
-          />
+          component="img"
+          sx={{ width: 150, height: 150 }}
+          image={product.imgUrl}
+          alt={product.name}
+        />
         </Grid>
 
         <Grid item xs={12} md={6}>
@@ -64,6 +63,9 @@ const DetailPage = (): React.ReactElement => {
             }}
             elevation={3}
           >
+            <Typography variant="h5" color="textPrimary">
+              {product.name}
+            </Typography>
             <Typography variant="body1" color="textPrimary">
               Descripción detallada del ítem seleccionado.
             </Typography>

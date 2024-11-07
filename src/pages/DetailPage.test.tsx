@@ -1,11 +1,36 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { describe, it, expect, vi, Mock } from 'vitest';
 import DetailPage from './DetailPage';
 import es from '@/helper/i18n/translation/es.json';
-import { act } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// Mock the `useRouteError` and `useNavigate` hooks from react-router-dom
+// Datos de producto simulado
+const mockProduct = {
+  id: 1,
+  name: 'Flor 1',
+  description: 'Descripción detallada del ítem seleccionado.',
+  price: 10,
+  image: 'image-url',
+};
+
+// Configuración de QueryClient para los tests
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
+// Mock de fetchProduct en @api/products para devolver mockProduct
+vi.mock('@/api/products', () => ({
+  fetchProduct: vi.fn((productId) => {
+    return productId === '1' ? Promise.resolve(mockProduct) : Promise.resolve(null);
+  }),
+}));
+
+// Mock de hooks de react-router-dom
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
   return {
@@ -15,17 +40,28 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
+// Wrapper para QueryClientProvider
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <QueryClientProvider client={queryClient}>
+    {children}
+  </QueryClientProvider>
+);
+
 describe('DetailPage', () => {
-  it('renders title', () => {
+  it('renders title & description', async () => {
     render(
       <MemoryRouter initialEntries={['/details/1']}>
         <Routes>
           <Route path="/details/:id" element={<DetailPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>, 
+      { wrapper }
     );
 
-    expect(screen.getByText('Flor: 1')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
+      expect(screen.getByText(mockProduct.description)).toBeInTheDocument();
+    });
   });
 
   it('renders back button with correct text', () => {
@@ -34,7 +70,8 @@ describe('DetailPage', () => {
         <Routes>
           <Route path="/details/:id" element={<DetailPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>, 
+      { wrapper }
     );
 
     expect(screen.getByText(es['app.page.details.btn.back'])).toBeInTheDocument();
@@ -46,10 +83,11 @@ describe('DetailPage', () => {
         <Routes>
           <Route path="/details/:id" element={<DetailPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>, 
+      { wrapper }
     );
 
-    expect(screen.getByText('Imagen')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: mockProduct.name })).toBeInTheDocument();
   });
 
   it('renders description section', () => {
@@ -58,7 +96,8 @@ describe('DetailPage', () => {
         <Routes>
           <Route path="/details/:id" element={<DetailPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>, 
+      { wrapper }
     );
 
     expect(screen.getByText('Descripción detallada del ítem seleccionado.')).toBeInTheDocument();
@@ -73,7 +112,8 @@ describe('DetailPage', () => {
         <Routes>
           <Route path="/details/:id" element={<DetailPage />} />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>, 
+      { wrapper }
     );
 
     const button = screen.getByText(es['app.page.details.btn.back']);
