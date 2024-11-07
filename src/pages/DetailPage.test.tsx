@@ -5,7 +5,6 @@ import DetailPage from './DetailPage';
 import es from '@/helper/i18n/translation/es.json';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// Datos de producto simulado
 const mockProduct = {
   id: 1,
   name: 'Flor 1',
@@ -14,7 +13,6 @@ const mockProduct = {
   image: 'image-url',
 };
 
-// Configuración de QueryClient para los tests
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -23,14 +21,12 @@ const queryClient = new QueryClient({
   },
 });
 
-// Mock de fetchProduct en @api/products para devolver mockProduct
 vi.mock('@/api/products', () => ({
   fetchProduct: vi.fn((productId) => {
     return productId === '1' ? Promise.resolve(mockProduct) : Promise.resolve(null);
   }),
 }));
 
-// Mock de hooks de react-router-dom
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
   return {
@@ -40,7 +36,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// Wrapper para QueryClientProvider
 const wrapper = ({ children }: { children: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>
     {children}
