@@ -18,7 +18,7 @@ const Header = (): React.ReactElement => {
       }}
     >
       <Typography variant="h4" color="primary">
-        {t("app.header.title")}
+        {t('app.header.title')}
       </Typography>
     </Box>
   );

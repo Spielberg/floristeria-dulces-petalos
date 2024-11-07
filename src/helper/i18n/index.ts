@@ -1,10 +1,10 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 
 import { defaultLang } from '@/config';
 
-import en from "./translation/en.json";
-import es from "./translation/es.json";
+import en from './translation/en.json';
+import es from './translation/es.json';
 
 i18n.use(initReactI18next).init({
   resources: {
