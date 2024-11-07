@@ -4,7 +4,6 @@ import { MemoryRouter } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 import { useRouteError, useNavigate } from 'react-router-dom';
 
-// Mock the `useRouteError` and `useNavigate` hooks from react-router-dom
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
   return {
@@ -55,7 +54,6 @@ describe('ErrorPage', () => {
     expect(navigate).toHaveBeenCalledWith('/');
   });
 
-  // add test for case {error?.statusText || error?.message || 'Not Found'} on line 36
   it('should render the error page with default error message when error is undefined', () => {
     (useRouteError as Mock).mockReturnValue(undefined);
 
