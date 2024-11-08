@@ -9,5 +9,10 @@ export interface Product {
   heightInCm: number;
 }
 
+export interface BreadcrumbLink {
+  to: string;
+  label: string;
+}
+
 export type ProductsApiResponse = Product[];
 export type ProductApiResponse = Product;
