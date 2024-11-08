@@ -3,7 +3,13 @@ import { Paper, IconButton, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 
-const Search = (): React.ReactElement => {
+interface Props {
+  filter: string;
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Search = (props: Props): React.ReactElement<Props> => {
+  const { filter, setFilter } = props;
   const { t } = useTranslation();
 
   return (
@@ -21,6 +27,8 @@ const Search = (): React.ReactElement => {
         variant="outlined"
         placeholder={t('app.search.input.placeholder')}
         fullWidth
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
         InputProps={{
           style: { backgroundColor: '#e0f7fa' }
         }}

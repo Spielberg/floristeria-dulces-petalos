@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 import HomePage from './HomePage';
@@ -54,14 +54,30 @@ describe('HomePage', () => {
   });
 
   it('renders links for each item', async () => {
+    const { container } = render(<HomePage />, { wrapper });
+
+    await waitFor(() => {
+      // we have more than those links, take care
+      const links = container.getElementsByClassName('product-link');
+      expect(links).toHaveLength(mockProducts.length);
+      [...links].forEach((link, index) => {
+        expect(link).toHaveAttribute('href', `/flor/${mockProducts[index].id}`);
+      });
+    });
+  });
+
+  it ('filters items', async () => {
     render(<HomePage />, { wrapper });
 
     await waitFor(() => {
-      const links = screen.getAllByRole('link');
-      expect(links).toHaveLength(mockProducts.length);
-      links.forEach((link, index) => {
-        expect(link).toHaveAttribute('href', `/flor/${mockProducts[index].id}`);
-      });
+      const items = screen.getAllByText(/Flor \d/);
+      expect(items).toHaveLength(mockProducts.length);
+
+      const searchInput = screen.getByRole('textbox');
+      fireEvent.change(searchInput, { target: { value: mockProducts[0].name } });
+
+      const filteredItems = screen.getAllByText(/Flor \d/);
+      expect(filteredItems).toHaveLength(1);
     });
   });
 });
