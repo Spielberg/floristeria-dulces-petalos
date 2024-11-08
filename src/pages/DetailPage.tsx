@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { Product } from '@/types';
 import { fetchProduct } from '@/api/products';
 import { useQuery } from '@tanstack/react-query';
+import { BreadcrumbLink } from '@/types';
+
 
 const DetailPage = (): React.ReactElement => {
   const { id } = useParams();
@@ -30,7 +32,12 @@ const DetailPage = (): React.ReactElement => {
   }
 
   return (
-    <Layout title={`Flor: ${id}`}>
+    <Layout
+      breadcrumb={[
+        { to: `/flor/${id}`, label: product.name } as BreadcrumbLink
+      ]}
+      title={`Flor: ${id}`}
+      >
       <Box sx={{ mb: 2 }}>
         <Button
           variant="contained"
