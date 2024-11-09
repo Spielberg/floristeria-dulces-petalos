@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { Paper, IconButton, TextField } from '@mui/material';
+import {
+  TextField,
+  InputAdornment,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 
@@ -13,27 +16,20 @@ const Search = (props: Props): React.ReactElement<Props> => {
   const { t } = useTranslation();
 
   return (
-    <Paper
-      sx={{
-        padding: 1,
-        display: 'flex',
-        alignItems: 'center'
+    <TextField
+      fullWidth
+      variant="outlined"
+      placeholder={t('app.search.input.placeholder')}
+      value={filter}
+      onChange={(e) => setFilter(e.target.value)}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon aria-label="search icon" />
+          </InputAdornment>
+        ),
       }}
-    >
-      <IconButton sx={{ padding: 1 }}>
-        <SearchIcon />
-      </IconButton>
-      <TextField
-        variant="outlined"
-        placeholder={t('app.search.input.placeholder')}
-        fullWidth
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        InputProps={{
-          style: { backgroundColor: '#e0f7fa' }
-        }}
-      />
-    </Paper>
+    />
   );
 }
 

@@ -1,25 +1,15 @@
-import * as React from 'react';
-import {
-  Box,
-  Typography,
-} from '@mui/material';
+import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
+import { Link } from 'react-router-dom';
 
 const Header = (): React.ReactElement => {
   const { t } = useTranslation();
   
-  return (
-    <Box
-      sx={{
-        backgroundColor: '#f8d7da',
-        padding: 2,
-        textAlign: 'center'
-      }}
-    >
-      <Typography variant="h4" color="primary">
-        {t('app.header.title')}
-      </Typography>
+  return(
+    <Box>
+      <Link to="/">
+        <img src="/public/logotipo.png" width="350px" alt={t('app.header.img.alt')} />
+      </Link>
     </Box>
   );
 }

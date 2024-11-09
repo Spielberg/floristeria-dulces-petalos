@@ -1,6 +1,7 @@
 {
-  "app.header.title": "Floristería Dulces Pétalos",
+  "app.header.img.alt": "Floristería Dulces Pétalos",
   "app.search.input.placeholder": "Buscar...",
   "app.page.details.btn.back": "Volver",
-  "app.breadcrumb.links.home": "Inicio"
+  "app.breadcrumb.links.home": "Inicio",
+  "app.page.home.btn.details": "Detalles"
 }

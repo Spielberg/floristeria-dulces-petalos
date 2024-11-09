@@ -1,9 +1,15 @@
 import {
-  Box,
-  Grid,
-  CircularProgress,
-  CardMedia,
   Alert,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  CircularProgress,
+  Grid2 as Grid,
+  Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import useProducts from '@/helper/hooks/useProducts';
@@ -12,33 +18,44 @@ import { Product } from '@/types';
 
 import Search from '@/components/Search';
 import Layout from '@/Layout';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
-const Item = ({ product }: { product: Product }) => (
-  <Box
-    sx={{
-      width: '100%',
-      height: 120,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#b3e5fc',
-      borderRadius: 2,
-      border: '1px solid #81d4fa'
-    }}
-  >
-    <CardMedia
-      component="img"
-      sx={{ width: 150, height: 150 }}
-      image={product.imgUrl}
-      alt={product.name}
-    />
-    <pre>{JSON.stringify(product, null, 2)}</pre>
-  </Box>
-);
+const Item = ({ product }: { product: Product }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Grid size={{ xs: 12, md: 3, sm: 6 }}>
+      <Card sx={{ maxWidth: 345 }}>
+        <CardHeader
+          title={product.name}
+          subheader={product.binomialName}
+        />
+        <CardMedia
+          component="img"
+          height="194"
+          image={product.imgUrl}
+          alt={product.name}
+        />
+        <CardContent>
+          <Typography variant="h6" sx={{ color: 'text.secondary' }}>
+            {product.price}€
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <Link to={`/flor/${product.id}`}>
+            <Button size="small">
+              {t('app.page.home.btn.details')}
+            </Button>
+          </Link>
+        </CardActions>
+      </Card>
+    </Grid>
+  );
+}
 
 const HomePage = () => {
   const { filter, setFilter, error, products, isLoading } = useProducts();
+  const { t } = useTranslation();
 
   if (error) {
     return (
@@ -55,15 +72,11 @@ const HomePage = () => {
           <Search filter={filter} setFilter={setFilter} />
         </Box>
         {isLoading && <CircularProgress />}
-        {products?.length > 0 && (
-          <Grid container spacing={2}>
-            {products.map((product) => (
-              <Grid item xs={6} sm={4} md={3} key={product.id}>
-                <Link className="product-link" to={`/flor/${product.id}`}>
-                  <Item product={product} />
-                </Link>
-              </Grid>
-            ))}
+        {products?.length && (
+          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            {products.map((product) => 
+              <Item key={product.id} product={product} />
+            )}
           </Grid>
         )}
         {products?.length === 0 && (

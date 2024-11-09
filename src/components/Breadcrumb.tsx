@@ -7,19 +7,23 @@ interface Props {
   links?: BreadcrumbLink[];
 }
 
+const CustomLink = (props: BreadcrumbLink) => {
+  return (
+    <Link to={props.to} style={{ textDecoration: 'none' }}>
+      {props.label}
+    </Link>
+  );
+}
+
 const Breadcrumb = (props: Props): React.ReactElement<Props> => {
   const { links = [] } = props;
   const { t } = useTranslation();
   
   return (
     <Breadcrumbs aria-label="breadcrumb">
-      <Link to="/" color="inherit">
-        {t('app.breadcrumb.links.home')}
-      </Link>
+      <CustomLink to="/" label={t('app.breadcrumb.links.home')} />
       {links.map((link, index) => (
-        <Link key={index} to={link.to} color="inherit">
-          {link.label}
-        </Link>
+        <CustomLink key={index} {...link} />
       ))}
     </Breadcrumbs>
     );
