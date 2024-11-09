@@ -20,6 +20,16 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "composite": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@types/*": ["src/types/*"]
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
+    /* Testing */
+    "types": ["@testing-library/jest-dom"],
   },
   "include": ["src"]
 }

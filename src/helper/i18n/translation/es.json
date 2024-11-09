@@ -1,0 +1,10 @@
+{
+  "app.header.img.alt": "Floristería Dulces Pétalos",
+  "app.search.input.placeholder": "Buscar...",
+  "app.page.details.btn.back": "Volver",
+  "app.breadcrumb.links.home": "Inicio",
+  "app.page.home.btn.details": "Detalles",
+  "app.page.details.watering": "Riegos por semana {{count}}",
+  "app.fertilizer-type.phosphorus": "Fosforado",
+  "app.fertilizer-type.nitrogen": "Nitrogenado"
+}
