@@ -4,13 +4,17 @@ import { describe, it, expect, vi, Mock } from 'vitest';
 import DetailPage from './DetailPage';
 import es from '@/helper/i18n/translation/es.json';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Product } from '@/types';
 
-const mockProduct = {
-  id: 1,
-  name: 'Flor 1',
-  description: 'Descripción detallada del ítem seleccionado.',
-  price: 10,
-  image: 'image-url',
+const mockProduct: Product = {
+  id: '1',
+  name: 'Monstera Deliciosa',
+  binomialName: 'MonsterDeliciosa',
+  price: 200,
+  imgUrl: 'https://via.placeholder.com/150',
+  wateringsPerWeek: 2,
+  fertilizerType: 'nitrogen',
+  heightInCm: 200,
 };
 
 const queryClient = new QueryClient({
@@ -43,7 +47,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 describe('DetailPage', () => {
-  it('renders title & description', async () => {
+  it('renders name & binomialName', async () => {
     render(
       <MemoryRouter initialEntries={['/details/1']}>
         <Routes>
@@ -56,7 +60,7 @@ describe('DetailPage', () => {
     await waitFor(() => {  
       const nameElements = screen.getAllByText(mockProduct.name);
       expect(nameElements).toHaveLength(2);
-      expect(screen.getByText(mockProduct.description)).toBeInTheDocument();
+      expect(screen.getByText(mockProduct.binomialName)).toBeInTheDocument();
     });
   });
 
@@ -75,28 +79,15 @@ describe('DetailPage', () => {
 
   it('renders image section', () => {
     render(
-      <MemoryRouter initialEntries={['/details/1']}>
+      <MemoryRouter initialEntries={['/flor/1']}>
         <Routes>
-          <Route path="/details/:id" element={<DetailPage />} />
+          <Route path="/flor/:id" element={<DetailPage />} />
         </Routes>
       </MemoryRouter>, 
       { wrapper }
     );
 
     expect(screen.getByRole('img', { name: mockProduct.name })).toBeInTheDocument();
-  });
-
-  it('renders description section', () => {
-    render(
-      <MemoryRouter initialEntries={['/details/1']}>
-        <Routes>
-          <Route path="/details/:id" element={<DetailPage />} />
-        </Routes>
-      </MemoryRouter>, 
-      { wrapper }
-    );
-
-    expect(screen.getByText('Descripción detallada del ítem seleccionado.')).toBeInTheDocument();
   });
 
   it('navigates back when back button is clicked', () => {
@@ -117,6 +108,6 @@ describe('DetailPage', () => {
       button.click();
     });
 
-    expect(navigate).toHaveBeenCalledWith(-1);
+    expect(navigate).toHaveBeenCalledWith('/');
   });
 });
