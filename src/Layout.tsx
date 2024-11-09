@@ -12,23 +12,29 @@ import { BreadcrumbLink } from '@/types';
 
 interface Props {
   children: React.ReactNode;
+  flexEndComponent?: React.ReactNode;
   breadcrumb?: BreadcrumbLink[];
-  title: string;
+  title?: string;
 }
 
 const Layout = (props: Props): React.ReactElement<Props> => {
-  const { breadcrumb, children, title } = props;
+  const { breadcrumb, children, title = '', flexEndComponent } = props;
   
   return (
     <Container maxWidth="lg">
       <Header />
       <Breadcrumb links={breadcrumb} />
-      <Box sx={{ mt: 3 }}>
+      <Box sx={{ mt: 3, display: 'flex', alignItems: 'center' }}>
         <Typography variant="h6">
           {title}
         </Typography>
-        {children}
+        {flexEndComponent && (
+          <Box sx={{ marginLeft: 'auto' }}>
+            {flexEndComponent}
+          </Box>
+        )}
       </Box>
+      {children}
     </Container>
   );
 }
