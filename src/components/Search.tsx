@@ -25,7 +25,7 @@ const Search = (props: Props): React.ReactElement<Props> => {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon />
+            <SearchIcon aria-label="search icon" />
           </InputAdornment>
         ),
       }}
