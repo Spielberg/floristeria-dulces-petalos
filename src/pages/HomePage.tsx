@@ -9,12 +9,12 @@ import {
   CardHeader,
   Typography,
   Button,
+  Alert,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import useProducts from '@/helper/hooks/useProducts';
 
 import { Product } from '@/types';
-import { fetchAll } from '@/api/products';
 
 import Search from '@/components/Search';
 import Layout from '@/Layout';
@@ -54,16 +54,22 @@ const Item = ({ product }: { product: Product }) => {
 }
 
 const HomePage = () => {
-  const { data: products, isLoading } = useQuery<Product[]>({
-    queryKey: ['products'],
-    queryFn: fetchAll
-  });
+  const { filter, setFilter, error, products, isLoading } = useProducts();
+  const { t } = useTranslation();
+
+  if (error) {
+    return (
+      <Alert severity="error">
+        {error.message}
+      </Alert>
+    )
+  }
 
   return (
     <Layout title="List view">
       <>
         <Box sx={{ mb: 3 }}>
-          <Search />
+          <Search filter={filter} setFilter={setFilter} />
         </Box>
         {isLoading && <CircularProgress />}
         {products?.length && (
@@ -72,6 +78,11 @@ const HomePage = () => {
               <Item key={product.id} product={product} />
             )}
           </Grid>
+        )}
+        {products?.length === 0 && (
+          <Alert severity="info">
+            {t('app.search.no-results')}
+          </Alert>
         )}
       </>
     </Layout>

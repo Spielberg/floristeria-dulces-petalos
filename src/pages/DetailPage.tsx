@@ -58,7 +58,7 @@ const DetailPage = (): React.ReactElement => {
         />
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid className="product-details" item xs={12} md={6}>
           <Paper
             sx={{
               padding: 2,
