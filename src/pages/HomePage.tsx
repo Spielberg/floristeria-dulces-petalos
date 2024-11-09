@@ -66,7 +66,7 @@ const HomePage = () => {
   }
 
   return (
-    <Layout title="List view">
+    <Layout title={t('app.home.title')}>
       <>
         <Box sx={{ mb: 3 }}>
           <Search filter={filter} setFilter={setFilter} />

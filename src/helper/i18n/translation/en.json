@@ -1,1 +1,12 @@
-{}
+{
+  "app.header.img.alt": "Sweet Petals Flower Shop",
+  "app.home.title": "Plants",
+  "app.search.input.placeholder": "Search...",
+  "app.page.details.btn.back": "Back",
+  "app.breadcrumb.links.home": "Home",
+  "app.page.home.btn.details": "Details",
+  "app.page.details.watering": "Watering per week {{count}}",
+  "app.fertilizer-type.phosphorus": "Phosphorus",
+  "app.fertilizer-type.nitrogen": "Nitrogen",
+  "app.search.no-results": "No results found"
+}
