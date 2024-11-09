@@ -24,7 +24,7 @@ const Layout = (props: Props): React.ReactElement<Props> => {
       <Header />
       <Breadcrumb links={breadcrumb} />
       <Box sx={{ mt: 3 }}>
-        <Typography variant="h6" color="secondary" gutterBottom>
+        <Typography variant="h6">
           {title}
         </Typography>
         {children}
