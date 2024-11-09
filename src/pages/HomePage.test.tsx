@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi } from 'vitest';
 import HomePage from './HomePage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import es from '@/helper/i18n/translation/es.json';
 
 const mockProducts = [
   { id: 1, name: 'Flor 1', description: 'Descripción de Flor 1', price: 10 },
@@ -57,10 +58,10 @@ describe('HomePage', () => {
     render(<HomePage />, { wrapper });
 
     await waitFor(() => {
-      const links = screen.getAllByRole('link');
+      const links = screen.getAllByText(es['app.page.home.btn.details']);
       expect(links).toHaveLength(mockProducts.length);
       links.forEach((link, index) => {
-        expect(link).toHaveAttribute('href', `/flor/${mockProducts[index].id}`);
+        expect(link.parentElement).toHaveAttribute('href', `/flor/${mockProducts[index].id}`);
       });
     });
   });
