@@ -3,15 +3,16 @@ import {
   Grid,
   CircularProgress,
   CardMedia,
+  Alert,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import useProducts from '@/helper/hooks/useProducts';
 
 import { Product } from '@/types';
-import { fetchAll } from '@/api/products';
 
 import Search from '@/components/Search';
 import Layout from '@/Layout';
+import { t } from 'i18next';
 
 const Item = ({ product }: { product: Product }) => (
   <Box
@@ -37,28 +38,38 @@ const Item = ({ product }: { product: Product }) => (
 );
 
 const HomePage = () => {
-  const { data: products, isLoading } = useQuery<Product[]>({
-    queryKey: ['products'],
-    queryFn: fetchAll
-  });
+  const { filter, setFilter, error, products, isLoading } = useProducts();
+
+  if (error) {
+    return (
+      <Alert severity="error">
+        {error.message}
+      </Alert>
+    )
+  }
 
   return (
     <Layout title="List view">
       <>
         <Box sx={{ mb: 3 }}>
-          <Search />
+          <Search filter={filter} setFilter={setFilter} />
         </Box>
         {isLoading && <CircularProgress />}
-        {products?.length && (
+        {products?.length > 0 && (
           <Grid container spacing={2}>
             {products.map((product) => (
               <Grid item xs={6} sm={4} md={3} key={product.id}>
-                <Link to={`/flor/${product.id}`}>
+                <Link className="product-link" to={`/flor/${product.id}`}>
                   <Item product={product} />
                 </Link>
               </Grid>
             ))}
           </Grid>
+        )}
+        {products?.length === 0 && (
+          <Alert severity="info">
+            {t('app.search.no-results')}
+          </Alert>
         )}
       </>
     </Layout>

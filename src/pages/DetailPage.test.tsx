@@ -53,8 +53,9 @@ describe('DetailPage', () => {
       { wrapper }
     );
 
-    await waitFor(() => {
-      expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
+    await waitFor(() => {  
+      const nameElements = screen.getAllByText(mockProduct.name);
+      expect(nameElements).toHaveLength(2);
       expect(screen.getByText(mockProduct.description)).toBeInTheDocument();
     });
   });
