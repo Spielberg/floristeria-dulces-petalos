@@ -8,7 +8,7 @@ const Header = (): React.ReactElement => {
   return(
     <Box>
       <Link to="/">
-        <img src="/public/logotipo.png" width="350px" alt={t('app.header.img.alt')} />
+        <img src="/logotipo.png" width="350px" alt={t('app.header.img.alt')} />
       </Link>
     </Box>
   );
